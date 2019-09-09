@@ -24,6 +24,13 @@ const plugins = [new VueLoaderPlugin()]
 
 const resolve = {
   alias: {
+    client: path.resolve(__dirname, 'src/client'),
+    components: path.resolve(__dirname, 'src/components'),
+    factories: path.resolve(__dirname, 'src/factories'),
+    routes: path.resolve(__dirname, 'src/routes'),
+    server: path.resolve(__dirname, 'src/server'),
+    utils: path.resolve(__dirname, 'src/utils'),
+    views: path.resolve(__dirname, 'src/views'),
     vue$: 'vue/dist/vue.esm.js',
   },
   extensions: ['.js', '.json', '.vue'],

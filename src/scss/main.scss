@@ -1,0 +1,207 @@
+$background: #241734;
+$foreground: #eee;
+$red: #f6019d;
+$blue: #2de2e6;
+
+a {
+  text-decoration: none;
+}
+
+body {
+  color: $foreground;
+  font-size: 16px;
+  margin: 0;
+}
+
+.app {
+  align-content: center;
+  background-image: linear-gradient(to bottom, #770ecb, #3663ff);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
+.article {
+  background: $background;
+  box-sizing: border-box;
+  min-height: 5em;
+  padding: 2em;
+  text-align: justify;
+
+  a {
+    color: $red;
+    text-decoration: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: $blue;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+
+  img {
+    margin: 0 auto;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+
+  ul {
+    margin: 1em 0;
+  }
+
+  .spacer {
+    background: $foreground;
+    height: 2px;
+    margin: 1em 0;
+    width: 100%;
+  }
+
+  .title {
+  }
+}
+
+.branding {
+  align-items: center;
+  color: $blue;
+  display: flex;
+}
+
+.content {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 4em auto;
+  width: 80vw;
+}
+
+.footer {
+  align-items: center;
+  background: $background;
+  display: flex;
+  flex-direction: column;
+
+  a {
+    color: $blue;
+    margin: 0 1em;
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+}
+
+.header {
+  align-items: center;
+  background: $background;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  min-height: 2.5em;
+  padding: 0.5em 1em;
+  width: 100vw;
+  max-width: 100%;
+}
+
+.outline {
+  background: $background;
+  margin: 2em 0 0;
+  padding: 1em;
+
+  h1 {
+    font-size: 0.9em;
+  }
+
+  h2 {
+    font-size: 0.8em;
+    margin-left: 1em;
+  }
+
+  h3 {
+    font-size: 0.7em;
+    margin-left: 2em;
+  }
+}
+
+.login {
+  color: $red;
+  display: flex;
+  justify-content: flex-end;
+  font-weight: bold;
+  padding: 0.2em 0.5em;
+}
+
+.logo {
+  background: $red;
+  border-radius: 5px;
+  height: 1.5em;
+  width: 1.5em;
+  margin-right: 0.5em;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  max-width: 100%;
+  min-height: 100vh;
+  padding: 2em;
+  width: 100vw;
+}
+
+.search {
+  input {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid $blue;
+    color: $blue;
+    width: 30vw;
+    font-size: 1em;
+    padding: 0.2em 0;
+  }
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-height: 5em;
+  width: 20vw;
+}
+
+.tab {
+  background: #2e2157;
+  padding: 0.5em 1em;
+}
+
+.tab_list {
+  color: #aaa;
+  display: flex;
+  font-size: 0.9em;
+
+  .is_active {
+    background: $background;
+    color: $foreground;
+  }
+}
+
+.title {
+  color: $red;
+}
