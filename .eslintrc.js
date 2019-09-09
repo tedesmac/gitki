@@ -13,7 +13,7 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module',
   },
-  plugins: ['header', 'jsdoc', 'vue', 'prettier'],
+  plugins: ['jsdoc', 'vue', 'prettier'],
   rules: {
     'no-param-reassign': [
       'error',
