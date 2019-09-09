@@ -1,0 +1,48 @@
+module.exports = {
+  env: {
+    browser: true,
+    es6: true,
+    node: true,
+  },
+  extends: ['airbnb-base', 'prettier', 'prettier/vue'],
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  plugins: ['header', 'jsdoc', 'vue', 'prettier'],
+  rules: {
+    'no-param-reassign': [
+      'error',
+      { props: true, ignorePropertyModificationsFor: ['state'] },
+    ],
+    'jsdoc/check-alignment': 2,
+    'jsdoc/check-examples': 2,
+    'jsdoc/check-indentation': 2,
+    'jsdoc/check-param-names': 2,
+    'jsdoc/check-syntax': 2,
+    'jsdoc/check-tag-names': 2,
+    'jsdoc/check-types': 2,
+    'jsdoc/newline-after-description': 2,
+    'jsdoc/no-undefined-types': 2,
+    'jsdoc/require-description': 2,
+    'jsdoc/require-description-complete-sentence': 2,
+    'jsdoc/require-example': 0,
+    'jsdoc/require-hyphen-before-param-description': 2,
+    'jsdoc/require-param': 2,
+    'jsdoc/require-param-description': 1,
+    'jsdoc/require-param-name': 2,
+    'jsdoc/require-param-type': 2,
+    'jsdoc/require-returns': 2,
+    'jsdoc/require-returns-check': 2,
+    'jsdoc/require-returns-description': 1,
+    'jsdoc/require-returns-type': 2,
+    'jsdoc/valid-types': 2,
+  },
+  settings: {
+    'import/resolver': 'webpack',
+  },
+}

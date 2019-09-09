@@ -1,0 +1,68 @@
+{
+  "name": "wiki_ui",
+  "version": "0.0.1",
+  "description": "Browse the leftist database more easily.",
+  "main": "dist/main.js",
+  "repository": "https://gitlab.com/centre-0-collective/leftist-database-ui",
+  "author": "Kremor Pärt",
+  "license": "AGPL-3.0-or-later",
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.3.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.2.0",
+    "eslint-import-resolver-webpack": "^0.11.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsdoc": "^15.9.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.5",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.19.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2",
+    "sass-loader": "^8.0.0",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-brands-svg-icons": "^5.10.2",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/vue-fontawesome": "^0.1.7",
+    "@hapi/hapi": "^18.3.2",
+    "vue": "^2.6.10",
+    "vue-router": "^3.1.3",
+    "vue-server-renderer": "^2.6.10",
+    "vuex": "^3.1.1",
+    "vuex-router-sync": "^5.0.0"
+  },
+  "scripts": {
+    "build": "webpack -p",
+    "dev": "npm-run-all --parallel dev:watch dev:server",
+    "dev:build": "webpack -d",
+    "dev:server": "nodemon . start --watch dist/main.js",
+    "dev:watch": "webpack --watch",
+    "lint": "eslint",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}
