@@ -86,7 +86,8 @@ body {
   display: flex;
   justify-content: space-evenly;
   margin: 4em auto;
-  width: 80vw;
+  min-height: 60vh;
+  width: 90vw;
 }
 
 .footer {
@@ -165,6 +166,14 @@ body {
   width: 100vw;
 }
 
+.no-sidebar {
+  background: $background;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  width: 100%;
+}
+
 .search {
   input {
     margin: 0;
@@ -179,11 +188,28 @@ body {
   }
 }
 
+.search-result {
+  a {
+    color: $red;
+  }
+
+  h2 {
+    margin: 0;
+  }
+}
+
 .sidebar {
   display: flex;
   flex-direction: column;
   min-height: 5em;
   width: 20vw;
+}
+
+.spacer {
+  background: $foreground;
+  height: 1px;
+  margin: 0.5em 0;
+  width: 100%;
 }
 
 .tab {

@@ -48,16 +48,15 @@ export const getMetaData = content => {
 const getWikiData = item => {
   if (item.type === 'directory') {
     return item.children.flatMap(child => getWikiData(child))
-  } 
-    const content = Fs.readFileSync(item.path, 'utf8')
-    const uri = item.path.replace('wiki/content', '').replace('.md', '')
-    const lang = getLang(uri)
-    return {
-      lang,
-      uri,
-      ...getMetaData(content),
-    }
-  
+  }
+  const content = Fs.readFileSync(item.path, 'utf8')
+  const uri = item.path.replace('wiki/content', '').replace('.md', '')
+  const lang = getLang(uri)
+  return {
+    lang,
+    uri: uri.replace(lang, `${lang}/wiki`),
+    ...getMetaData(content),
+  }
 }
 
 export const loadSettings = () => {
