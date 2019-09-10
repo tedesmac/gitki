@@ -1,7 +1,13 @@
+import DirectoryTree from 'directory-tree'
+import Fs from 'fs'
+import Fuse from 'fuse.js'
+import SimpleGit from 'simple-git'
+import Toml from 'toml'
 import { createRenderer } from 'vue-server-renderer'
 
 const imgTagRegex = /!\[.*\]\(.*\)/g
 const imgUrlRegex = /\(.*\)/g
+const metaDataRegex = /\+{3}[^]+\+{3}/gm
 
 export const fixImgTags = markdown => {
   return markdown
@@ -9,13 +15,60 @@ export const fixImgTags = markdown => {
     .map(match => {
       const index = match.search(imgUrlRegex)
       const url = match.substring(index)
-      return [url, `(/static/${  url.substring(1)}`]
+      return [url, `(/static/${url.substring(1)}`]
     })
     .reduce((acc, replacement) => {
       const faultyUrl = replacement[0]
       const fixedUrl = replacement[1]
       return acc.replace(faultyUrl, fixedUrl)
     }, markdown)
+}
+
+const getLang = uri => {
+  const uri2 = uri.substring(1)
+  const index = uri2.indexOf('/')
+  return uri2.substring(0, index)
+}
+
+export const getMetaData = content => {
+  metaDataRegex.lastIndex = 0
+  const match = metaDataRegex.exec(content)
+  if (match) {
+    const tomlLength = match[0].length
+    const toml = match[0].substring(3, tomlLength - 3)
+    const metadata = Toml.parse(toml)
+    const markdown = content.replace(match[0], '')
+    return { ...metadata, markdown }
+  }
+  return {
+    markdown: content,
+  }
+}
+
+const getWikiData = item => {
+  if (item.type === 'directory') {
+    return item.children.flatMap(child => getWikiData(child))
+  } 
+    const content = Fs.readFileSync(item.path, 'utf8')
+    const uri = item.path.replace('wiki/content', '').replace('.md', '')
+    const lang = getLang(uri)
+    return {
+      lang,
+      uri,
+      ...getMetaData(content),
+    }
+  
+}
+
+export const loadSettings = () => {
+  let config = {}
+  try {
+    const contents = Fs.readFileSync('wiki.config.json')
+    config = JSON.parse(contents)
+  } catch (error) {
+    console.log(error)
+  }
+  return config
 }
 
 export const renderer = createRenderer({
@@ -33,3 +86,37 @@ export const renderer = createRenderer({
 </html>
 `,
 })
+
+export const setFuseInstance = () => {
+  const tree = DirectoryTree('wiki/content', {
+    extensions: /\.md$/i,
+    exclude: [/\.git/, /\/img/],
+  })
+  const articles = tree.children.flatMap(child => getWikiData(child))
+  global.fuse = new Fuse(articles, {
+    shouldSort: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: ['title', 'tags', 'markdown'],
+  })
+}
+
+export const updateWikiRepository = repoUrl => {
+  try {
+    SimpleGit('wiki').pull((err, update) => {
+      if (update && update.summary.changes) {
+        console.log('Pulling')
+      } else {
+        console.log(err)
+        console.log('repo is up to date')
+      }
+    })
+  } catch (error) {
+    console.log(error)
+    console.log('clonning repository')
+    SimpleGit().clone(repoUrl, 'wiki')
+  }
+}

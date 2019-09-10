@@ -11,7 +11,7 @@ const articleView = req => {
   req.log('VIEW', { path: req.path })
 
   const articlePath = req.params.article
-  const {locale} = req.params
+  const { locale } = req.params
   const path = `wiki/content/${locale}/${articlePath}.md`
   let markdown = ''
 
@@ -61,7 +61,10 @@ const indexView = req => {
 
 const searchView = req => {
   req.log('VIEW', { path: req.path })
-  return 'Search'
+  const { locale } = req.params
+  const query = req.query.q
+  const results = global.fuse.search(query).filter(item => item.lang === locale)
+  return results
 }
 
 export default {
