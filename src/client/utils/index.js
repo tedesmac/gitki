@@ -1,5 +1,8 @@
 import Marked from 'marked'
 import SanitizeHtml from 'sanitize-html'
+import Toml from 'toml'
+
+const metaDataRegex = /\+{3}[^]+\+{3}/gm
 
 const sanitizeOptions = {
   allowedTags: [
@@ -37,6 +40,21 @@ const sanitizeOptions = {
   },
   allowedSchemes: ['http', 'https'],
   allowedSchemesAppliedToAttributes: ['href'],
+}
+
+export const getMetaData = content => {
+  metaDataRegex.lastIndex = 0
+  const match = metaDataRegex.exec(content)
+  if (match) {
+    const tomlLength = match[0].length
+    const toml = match[0].substring(3, tomlLength - 3)
+    const metadata = Toml.parse(toml)
+    const markdown = content.replace(match[0], '')
+    return { ...metadata, markdown }
+  }
+  return {
+    markdown: content,
+  }
 }
 
 export const removeHtmlTags = string => string.replace(/<(.|\n)*?>/g, '')

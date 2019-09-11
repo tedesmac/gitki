@@ -1,13 +1,12 @@
+import { getMetaData } from 'client/utils'
 import DirectoryTree from 'directory-tree'
 import Fs from 'fs'
 import Fuse from 'fuse.js'
 import SimpleGit from 'simple-git'
-import Toml from 'toml'
 import { createRenderer } from 'vue-server-renderer'
 
 const imgTagRegex = /!\[.*\]\(.*\)/g
 const imgUrlRegex = /\(.*\)/g
-const metaDataRegex = /\+{3}[^]+\+{3}/gm
 
 export const fixImgTags = markdown => {
   return markdown
@@ -28,21 +27,6 @@ const getLang = uri => {
   const uri2 = uri.substring(1)
   const index = uri2.indexOf('/')
   return uri2.substring(0, index)
-}
-
-export const getMetaData = content => {
-  metaDataRegex.lastIndex = 0
-  const match = metaDataRegex.exec(content)
-  if (match) {
-    const tomlLength = match[0].length
-    const toml = match[0].substring(3, tomlLength - 3)
-    const metadata = Toml.parse(toml)
-    const markdown = content.replace(match[0], '')
-    return { ...metadata, markdown }
-  }
-  return {
-    markdown: content,
-  }
 }
 
 const getWikiData = item => {

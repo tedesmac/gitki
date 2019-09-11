@@ -13,14 +13,15 @@
 <script>
 import Footer from 'components/footer'
 import Header from 'components/header'
-import { renderMarkdown } from 'client/utils'
+import { getMetaData, renderMarkdown } from 'client/utils'
 
 export default {
   components: { Footer, Header },
 
   computed: {
     markdown() {
-      return renderMarkdown(this.$store.state.markdown)
+      const data = getMetaData(this.$store.state.markdown)
+      return renderMarkdown(data.markdown)
     },
   },
 }
