@@ -45,7 +45,8 @@ export const getArticle = (lang, articleUri) => {
 
 export const getSearch = (lang, query) => {
   console.log('[GET SEARCH]', lang, query)
-  return global.fuse.search(query.q).filter(item => item.lang === lang)
+  const results = global.fuse.search(query.q).filter(item => item.lang === lang)
+  return { results }
 }
 
 export const getInitialState = (url, query) => {
