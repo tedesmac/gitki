@@ -3,10 +3,7 @@ import { getInitialState, renderer } from 'utils'
 
 const createApp = context => {
   return new Promise((resolve, reject) => {
-    const state = getInitialState(context.url, context.query)
-    console.log('[STATE]', state)
-
-    const { app, router, store } = AppFactory(state)
+    const { app, router } = AppFactory(context.state)
 
     router.push(context.url)
 
@@ -17,20 +14,17 @@ const createApp = context => {
         return reject(new Error("Vue Router doesn't contain any components"))
       }
 
-      context.rendered = () => {
-        context.state = store.state
-      }
-
       resolve(app)
     }, reject)
   })
 }
 
 export default req => {
-  const context = { query: req.query, url: req.path }
+  const state = getInitialState(req.path, req.query)
+  const context = { url: req.path, state }
 
   return createApp(context)
-    .then(app => renderer(app, ['vendors~client.js', 'client.js']))
+    .then(app => renderer(app, ['vendors~client.js', 'client.js'], state))
     .catch(error => {
       console.log('[APP VIEW]', error)
       return '<b>500</b> Internal server error'

@@ -87,7 +87,7 @@ export const loadSettings = () => {
   return config
 }
 
-export const renderer = (component, scripts = []) => {
+export const renderer = (component, scripts = [], state = {}) => {
   const scriptStrings = scripts.reduce((acc, name) => {
     return `${acc}<script src="/static/js/${name}"></script>`
   }, '')
@@ -100,6 +100,7 @@ export const renderer = (component, scripts = []) => {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script>window.__INITIAL_STATE__ = ${JSON.stringify(state)}</script>
   </head>
   <body>
     <!--vue-ssr-outlet-->
