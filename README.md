@@ -19,7 +19,6 @@
 
 3. Create a configuration file for the server.
     ```bash
-    $> cd leftist-database-ui
     $> touch wiki.config.json
     ```
 
