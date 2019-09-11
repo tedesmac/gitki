@@ -4,10 +4,16 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default (state = {}) =>
+export default (newState = {}) =>
   new Vuex.Store({
     state: () => ({
       ...defaultState,
-      ...state,
+      ...newState,
     }),
+
+    mutations: {
+      setOutline(state, payload) {
+        state.outline = payload
+      },
+    },
   })
