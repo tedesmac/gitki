@@ -39,6 +39,7 @@ body {
   h2,
   h3 {
     color: $blue;
+    margin: 0;
   }
 
   h1 {
@@ -73,6 +74,7 @@ body {
   }
 
   .title {
+    font-size: 2em;
   }
 }
 
