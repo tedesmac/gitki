@@ -5,8 +5,10 @@ import Fuse from 'fuse.js'
 import SimpleGit from 'simple-git'
 import { createRenderer } from 'vue-server-renderer'
 
+const articleRegex = /\/\w+\/wiki\/.*/gi
 const imgTagRegex = /!\[.*\]\(.*\)/g
 const imgUrlRegex = /\(.*\)/g
+const searchRegex = /\/\w+\/search\/?/gi
 
 export const fixImgTags = markdown => {
   return markdown
@@ -27,6 +29,36 @@ const getLang = uri => {
   const uri2 = uri.substring(1)
   const index = uri2.indexOf('/')
   return uri2.substring(0, index)
+}
+
+export const getArticle = (lang, articleUri) => {
+  console.log('[GET ARTICLE]', lang, articleUri)
+  try {
+    const path = `wiki/content/${lang}/${articleUri}.md`
+    const content = fixImgTags(Fs.readFileSync(path, 'utf8'))
+    return getMetaData(content)
+  } catch (error) {
+    console.log('[GET ARTICLE]', error)
+    return {}
+  }
+}
+
+export const getSearch = (lang, query) => {
+  console.log('[GET SEARCH]', lang, query)
+  return global.fuse.search(query.q).filter(item => item.lang === lang)
+}
+
+export const getInitialState = (url, query) => {
+  console.log('[INITAL STATE]', url)
+  const lang = getLang(url)
+  if (articleRegex.test(url)) {
+    const article = url.replace(/\/\w+\/wiki\//, '')
+    return getArticle(lang, article)
+  }
+  if (searchRegex.test(url)) {
+    return getSearch(lang, query)
+  }
+  return {}
 }
 
 const getWikiData = item => {
@@ -54,8 +86,13 @@ export const loadSettings = () => {
   return config
 }
 
-export const renderer = createRenderer({
-  template: `
+export const renderer = (component, scripts = []) => {
+  const scriptStrings = scripts.reduce((acc, name) => {
+    return `${acc}<script src="/static/js/${name}"></script>`
+  }, '')
+
+  return createRenderer({
+    template: `
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -65,10 +102,18 @@ export const renderer = createRenderer({
   </head>
   <body>
     <!--vue-ssr-outlet-->
+    ${scriptStrings}
   </body>
 </html>
 `,
-})
+  })
+    .renderToString(component)
+    .then(html => html)
+    .catch(error => {
+      console.log('[RENDERER]:', error)
+      return '<b>500</b> Internal server error'
+    })
+}
 
 export const setFuseInstance = () => {
   const tree = DirectoryTree('wiki/content', {

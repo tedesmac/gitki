@@ -26,9 +26,11 @@ const resolve = {
   alias: {
     client: path.resolve(__dirname, 'src/client'),
     components: path.resolve(__dirname, 'src/components'),
-    factories: path.resolve(__dirname, 'src/factories'),
+    factory: path.resolve(__dirname, 'src/factory'),
+    router: path.resolve(__dirname, 'src/router'),
     routes: path.resolve(__dirname, 'src/routes'),
     server: path.resolve(__dirname, 'src/server'),
+    store: path.resolve(__dirname, 'src/store'),
     utils: path.resolve(__dirname, 'src/utils'),
     views: path.resolve(__dirname, 'src/views'),
     vue$: 'vue/dist/vue.esm.js',
@@ -42,10 +44,17 @@ module.exports = [
   // client scripts
   {
     target: 'web',
-    entry: path.resolve(__dirname, 'src/client/index.js'),
+    entry: {
+      client: path.resolve(__dirname, 'src/client'),
+    },
     output: {
       filename: '[name].js',
       path: path.resolve(__dirname, 'dist/client/js'),
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
     },
     module: { rules },
     mode,

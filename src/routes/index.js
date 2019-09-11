@@ -1,5 +1,5 @@
 import Path from 'path'
-import Views from 'views'
+import AppView from 'views'
 
 export default [
   {
@@ -36,17 +36,7 @@ export default [
   },
   {
     method: 'get',
-    path: '/{locale}/',
-    handler: Views.indexView,
-  },
-  {
-    method: 'get',
-    path: '/{locale}/search/',
-    handler: Views.searchView,
-  },
-  {
-    method: 'get',
-    path: '/{locale}/wiki/{article*}',
-    handler: Views.articleView,
+    path: '/{path*}',
+    handler: AppView,
   },
 ]

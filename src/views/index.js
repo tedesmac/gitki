@@ -1,94 +1,38 @@
-import ArticleComponent from 'components/article'
-import IndexComponent from 'components/index'
-import SearchView from 'components/search'
-import Fs from 'fs'
-import { fixImgTags, renderer } from 'utils'
-import Vue from 'vue'
-import Vuex from 'vuex'
+import AppFactory from 'factory'
+import { getInitialState, renderer } from 'utils'
 
-Vue.use(Vuex)
+const createApp = context => {
+  return new Promise((resolve, reject) => {
+    const state = getInitialState(context.url, context.query)
+    console.log('[STATE]', state)
 
-const articleView = req => {
-  req.log('VIEW', { path: req.path })
+    const { app, router, store } = AppFactory(state)
 
-  const articlePath = req.params.article
-  const { locale } = req.params
-  const path = `wiki/content/${locale}/${articlePath}.md`
-  let markdown = ''
+    router.push(context.url)
 
-  try {
-    markdown = fixImgTags(Fs.readFileSync(path, 'utf8'))
-  } catch (error) {
-    console.log(error)
-  }
+    router.onReady(() => {
+      const matcheComponents = router.getMatchedComponents()
 
-  const store = new Vuex.Store({
-    state: {
-      markdown,
-    },
+      if (!matcheComponents.length) {
+        return reject(new Error("Vue Router doesn't contain any components"))
+      }
+
+      context.rendered = () => {
+        context.state = store.state
+      }
+
+      resolve(app)
+    }, reject)
   })
-
-  const article = new Vue({
-    components: { ArticleComponent },
-    template: `<ArticleComponent />`,
-    store,
-  })
-
-  return renderer
-    .renderToString(article)
-    .then(html => html)
-    .catch(error => {
-      console.log(error)
-      return '<b>500</b> Internal error'
-    })
 }
 
-const indexView = req => {
-  req.log('VIEW', { path: req.path })
+export default req => {
+  const context = { query: req.query, url: req.path }
 
-  const index = new Vue({
-    components: { IndexComponent },
-    template: '<IndexComponent />',
-  })
-
-  return renderer
-    .renderToString(index)
-    .then(html => html)
+  return createApp(context)
+    .then(app => renderer(app, ['vendors~client.js', 'client.js']))
     .catch(error => {
-      console.log(error)
-      return '<b>500</b> Internal error'
-    })
-}
-
-const searchView = req => {
-  req.log('VIEW', { path: req.path })
-  const { locale } = req.params
-  const query = req.query.q
-  const results = global.fuse.search(query).filter(item => item.lang === locale)
-
-  const store = new Vuex.Store({
-    state: {
-      results,
-    },
-  })
-
-  const search = new Vue({
-    components: { SearchView },
-    template: '<SearchView />',
-    store,
-  })
-
-  return renderer
-    .renderToString(search)
-    .then(html => html)
-    .catch(error => {
-      console.log(error)
+      console.log('[APP VIEW]', error)
       return '<b>500</b> Internal server error'
     })
-}
-
-export default {
-  articleView,
-  indexView,
-  searchView,
 }

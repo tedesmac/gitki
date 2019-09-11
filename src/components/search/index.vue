@@ -1,36 +1,26 @@
 <template>
-  <div class="app">
-    <Header />
+  <div class="content">
+    <div class="no-sidebar">
+      <div class="search-result" v-for="result in results">
+        <a :href="result.uri">
+          <h2>{{ result.title }}</h2>
+        </a>
 
-    <div class="content">
-      <div class="no-sidebar">
-        <div class="search-result" v-for="result in results">
-          <a :href="result.uri">
-            <h2>{{ result.title }}</h2>
-          </a>
+        <p>
+          {{ resultContent(result.markdown) }}
+          <a :href="result.uri">...</a>
+        </p>
 
-          <p>
-            {{ resultContent(result.markdown) }}
-            <a :href="result.uri">...</a>
-          </p>
-
-          <div class="spacer" />
-        </div>
+        <div class="spacer" />
       </div>
     </div>
-
-    <Footer />
   </div>
 </template>
 
 <script>
-import Footer from 'components/footer'
-import Header from 'components/header'
 import { removeHtmlTags, renderMarkdown } from 'client/utils'
 
 export default {
-  components: { Footer, Header },
-
   computed: {
     results() {
       return this.$store.state.results

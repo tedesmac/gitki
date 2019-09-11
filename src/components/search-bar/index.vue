@@ -32,7 +32,7 @@ export default {
     search() {
       const query = encodeURI(this.query)
       if (query.length > 0) {
-        window.location = `/${this.locale}/search/?q=${query}`
+        window.location = `/${this.locale}/search?q=${query}`
       }
     },
   },

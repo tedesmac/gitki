@@ -15,9 +15,11 @@ module.exports = {
   },
   plugins: ['jsdoc', 'vue', 'prettier'],
   rules: {
+    'consistent-return': ['warn'],
+    'no-underscore-dangle': ['error', { allow: ['__INITIAL_STATE__'] }],
     'no-param-reassign': [
       'error',
-      { props: true, ignorePropertyModificationsFor: ['state'] },
+      { props: true, ignorePropertyModificationsFor: ['context', 'state'] },
     ],
     'jsdoc/check-alignment': 2,
     'jsdoc/check-examples': 2,
