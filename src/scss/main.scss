@@ -29,10 +29,18 @@ body {
   min-height: 5em;
   padding: 2em;
   text-align: justify;
+  width: 60vw;
 
   a {
     color: $red;
     text-decoration: none;
+  }
+
+  blockquote {
+    box-sizing: border-box;
+    border-left: 4px solid $red;
+    margin: 1.5em 0 1.5em 2em;
+    padding: 0 4em 0 2em;
   }
 
   h1,
