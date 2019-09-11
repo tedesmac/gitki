@@ -76,12 +76,6 @@ body {
   }
 }
 
-.branding {
-  align-items: center;
-  color: $blue;
-  display: flex;
-}
-
 .content {
   display: flex;
   justify-content: space-evenly;
@@ -118,6 +112,12 @@ body {
   padding: 0.5em 1em;
   width: 100vw;
   max-width: 100%;
+}
+
+.header-left {
+  align-items: center;
+  color: $blue;
+  display: flex;
 }
 
 .outline {
@@ -174,17 +174,27 @@ body {
   width: 100%;
 }
 
-.search {
+.search-bar {
+  border-bottom: 1px solid $blue;
+
   input {
     margin: 0;
     padding: 0;
     background: none;
     border: none;
-    border-bottom: 1px solid $blue;
     color: $blue;
     width: 30vw;
     font-size: 1em;
     padding: 0.2em 0;
+  }
+
+  .icon {
+    color: $blue;
+    height: 1em;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

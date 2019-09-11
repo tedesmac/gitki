@@ -1,11 +1,9 @@
 <template>
   <nav class="header">
-    <div>
-      <a href="/">
-        <span class="logo" />
-        leftist wiki
-      </a>
-    </div>
+    <a class="header-left" href="/">
+      <div class="logo" />
+      leftist wiki
+    </a>
 
     <SearchBar />
 
