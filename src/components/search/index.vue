@@ -23,7 +23,7 @@ import { removeHtmlTags, renderMarkdown } from 'client/utils'
 export default {
   computed: {
     results() {
-      return this.$store.state.results
+      return this.$store.state.searchResults
     },
   },
 

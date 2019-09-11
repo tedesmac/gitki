@@ -1,4 +1,4 @@
-import { getMetaData } from 'client/utils'
+import { defaultState, getMetaData } from 'client/utils'
 import DirectoryTree from 'directory-tree'
 import Fs from 'fs'
 import Fuse from 'fuse.js'
@@ -46,20 +46,24 @@ export const getArticle = (lang, articleUri) => {
 export const getSearch = (lang, query) => {
   console.log('[GET SEARCH]', lang, query)
   const results = global.fuse.search(query.q).filter(item => item.lang === lang)
-  return { results }
+  return results
 }
 
 export const getInitialState = (url, query) => {
   console.log('[INITAL STATE]', url)
   const lang = getLang(url)
+  const state = {}
   if (articleRegex.test(url)) {
     const article = url.replace(/\/\w+\/wiki\//, '')
-    return getArticle(lang, article)
+    state.article = getArticle(lang, article)
   }
   if (searchRegex.test(url)) {
-    return getSearch(lang, query)
+    state.searchResults = getSearch(lang, query)
   }
-  return {}
+  return {
+    ...defaultState,
+    ...state,
+  }
 }
 
 const getWikiData = item => {

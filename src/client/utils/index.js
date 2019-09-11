@@ -42,6 +42,15 @@ const sanitizeOptions = {
   allowedSchemesAppliedToAttributes: ['href'],
 }
 
+export const defaultState = {
+  article: {},
+  description: '',
+  outline: {},
+  searchResults: [],
+  tags: [],
+  title: '',
+}
+
 export const getMetaData = content => {
   metaDataRegex.lastIndex = 0
   const match = metaDataRegex.exec(content)
