@@ -7,7 +7,9 @@
     </div>
 
     <div>
-      <Outline />
+      <div class="sidebar">
+        <Outline />
+      </div>
     </div>
   </div>
 </template>
