@@ -75,7 +75,6 @@ body {
   background: $background;
   box-sizing: border-box;
   min-height: 5em;
-  padding: 2em;
   text-align: justify;
 
   a {
@@ -138,6 +137,7 @@ body {
   background: $background;
   display: flex;
   flex-direction: column;
+  padding: 2em;
 }
 
 .content-container {
