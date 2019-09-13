@@ -12,8 +12,16 @@ export default (newState = {}) =>
     }),
 
     mutations: {
+      setMenu(state, payload) {
+        state.menu = payload
+      },
+
       setOutline(state, payload) {
         state.outline = payload
+      },
+
+      toggleMenu(state) {
+        state.menu = !state.menu
       },
     },
   })

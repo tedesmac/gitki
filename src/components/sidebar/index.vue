@@ -1,14 +1,12 @@
 <template>
-  <div class="sidebar">
+  <div :class="['sidebar', { 'menu-hide': !menu, 'menu-show': menu }]">
     <div>
-      <div class="sidebar-header">
-        <a href="/">
-          <div class="logo" />
-          Leftist Wiki
-        </a>
-      </div>
+      <a class="branding desktop-only" href="/">
+        <div class="logo" />
+        Leftist Wiki
+      </a>
 
-      <div class="spacer" />
+      <div class="spacer desktop-only" />
 
       <SearchBar />
 
@@ -56,6 +54,8 @@ export default {
         }
         return state.article.tags.sort()
       },
+
+      menu: state => state.menu,
 
       outline: state => state.outline,
     }),

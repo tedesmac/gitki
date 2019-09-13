@@ -1,5 +1,7 @@
 <template>
   <div class="app" id="app">
+    <Mobilebar />
+
     <Sidebar />
 
     <div class="content-container">
@@ -9,9 +11,10 @@
 </template>
 
 <script>
+import Mobilebar from 'components/mobilebar'
 import Sidebar from 'components/sidebar'
 
 export default {
-  components: { Sidebar },
+  components: { Mobilebar, Sidebar },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <nav class="outline">
-    <a v-for="i in outline" :href="i.href">
+    <a v-for="i in outline" :href="i.href" @click="onClick">
       <h1 v-if="i.tag === 'H1'">
         {{ i.text }}
       </h1>
@@ -23,5 +23,12 @@ export default {
   computed: mapState({
     outline: state => state.outline,
   }),
+
+  methods: {
+    onClick() {
+      this.$store.commit('setMenu', false)
+      document.body.style.overflow = 'auto'
+    },
+  },
 }
 </script>

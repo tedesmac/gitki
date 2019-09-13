@@ -45,6 +45,7 @@ const sanitizeOptions = {
 export const defaultState = {
   article: {},
   description: '',
+  menu: false,
   outline: {},
   searchResults: [],
   tags: [],
