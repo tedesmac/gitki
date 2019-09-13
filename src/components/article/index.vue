@@ -5,23 +5,14 @@
       <div class="spacer" />
       <div id="article" v-html="markdown" />
     </div>
-
-    <div>
-      <div class="sidebar">
-        <Outline />
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import { getMetaData, renderMarkdown } from 'client/utils'
-import Outline from 'components/outline'
 import Slugify from 'slugify'
 
 export default {
-  components: { Outline },
-
   computed: {
     markdown() {
       const data = getMetaData(this.$store.state.article.markdown)
