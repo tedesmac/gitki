@@ -16,7 +16,7 @@
 
       <div class="spacer" v-if="outline.length > 0" />
 
-      <nav class="sidebar-tags">
+      <nav class="sidebar-tags" v-if="articleTags.length > 0">
         <FontAwesomeIcon :icon="faTags" />
         <a href="#" v-for="tag in articleTags">{{ tag }}</a>
       </nav>
@@ -47,10 +47,14 @@ export default {
   computed: {
     ...mapState({
       articleTags: state => {
-        if (state.article) {
-          return state.article.tags.sort()
+        const article = state.article
+        if (
+          Object.keys(article).length === 0 &&
+          article.constructor === Object
+        ) {
+          return []
         }
-        return []
+        return state.article.tags.sort()
       },
 
       outline: state => state.outline,

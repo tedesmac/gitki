@@ -1,18 +1,16 @@
 <template>
-  <div class="content">
-    <div class="no-sidebar">
-      <div class="search-result" v-for="result in results">
-        <a :href="result.uri">
-          <h2>{{ result.title }}</h2>
-        </a>
+  <div>
+    <div class="search-result" v-for="(result, index) in results">
+      <a :href="result.uri">
+        <h2>{{ result.title }}</h2>
+      </a>
 
-        <p>
-          {{ resultContent(result.markdown) }}
-          <a :href="result.uri">...</a>
-        </p>
+      <p>
+        {{ resultContent(result.markdown) }}
+        <a :href="result.uri">...</a>
+      </p>
 
-        <div class="spacer" />
-      </div>
+      <div class="spacer" />
     </div>
   </div>
 </template>

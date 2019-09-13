@@ -1,18 +1,17 @@
 <template>
   <div class="app" id="app">
-    <Header />
+    <Sidebar />
 
-    <router-view />
-
-    <Footer />
+    <div class="content-container">
+      <router-view class="content" />
+    </div>
   </div>
 </template>
 
 <script>
-import Footer from 'components/footer'
-import Header from 'components/header'
+import Sidebar from 'components/sidebar'
 
 export default {
-  components: { Footer, Header },
+  components: { Sidebar },
 }
 </script>

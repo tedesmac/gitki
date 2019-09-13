@@ -1,10 +1,8 @@
 <template>
-  <div class="content">
-    <div class="article">
-      <h1 class="title">{{ title }}</h1>
-      <div class="spacer" />
-      <div id="article" v-html="markdown" />
-    </div>
+  <div class="article">
+    <h1 class="title">{{ title }}</h1>
+    <div class="spacer" />
+    <div id="article" v-html="markdown" />
   </div>
 </template>
 

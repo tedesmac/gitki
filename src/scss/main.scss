@@ -65,7 +65,7 @@ body {
   align-content: center;
   background-image: linear-gradient(to bottom, #770ecb, #3663ff);
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   justify-content: space-between;
   max-width: 100%;
   min-height: 100vh;
@@ -77,11 +77,6 @@ body {
   min-height: 5em;
   padding: 2em;
   text-align: justify;
-  width: 60vw;
-
-  @include touch {
-    width: 90vw;
-  }
 
   a {
     color: $red;
@@ -140,11 +135,16 @@ body {
 }
 
 .content {
+  background: $background;
   display: flex;
-  justify-content: space-between;
-  margin: 4em auto;
-  min-height: 60vh;
-  width: 90vw;
+  flex-direction: column;
+}
+
+.content-container {
+  box-sizing: border-box;
+  padding: 2em 4em;
+  min-height: 80vh;
+  width: 75vw;
 }
 
 .outline {
@@ -214,14 +214,6 @@ body {
   position: absolute;
   top: 2em;
   width: 100vw;
-}
-
-.no-sidebar {
-  background: $background;
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
-  width: 100%;
 }
 
 .search-bar {
