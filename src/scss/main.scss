@@ -147,74 +147,16 @@ body {
   width: 90vw;
 }
 
-.footer {
-  align-items: center;
-  background: $background;
-  display: flex;
-  flex-direction: column;
-
-  a {
-    color: $blue;
-    margin: 0 1em;
-  }
-}
-
-.footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 1em;
-}
-
-.header {
-  align-items: center;
-  background: $background;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  height: 2em;
-  min-height: 2.5em;
-  padding: 0.5em 1em;
-  position: relavtive;
-  width: 100vw;
-  max-width: 100%;
-}
-
-.header-left {
-  align-items: center;
-  color: $blue;
-  display: flex;
-}
-
-.header-right {
-  align-items: center;
-  display: flex;
-
-  .burger {
-    color: $red;
-    cursor: pointer;
-    font-size: 1.4em;
-
-    @include desktop {
-      display: none;
-    }
-  }
-
-  .search {
-    @include touch {
-      display: none;
-    }
-  }
-}
-
 .outline {
   background: $background;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 1em;
+  margin-bottom: 1em;
+  padding-right: 1em;
 
   a {
-    color: $blue;
+    color: $foreground;
   }
 
   h1 {
@@ -283,7 +225,10 @@ body {
 }
 
 .search-bar {
+  align-items: center;
   border-bottom: 1px solid $blue;
+  display: flex;
+  margin: 1.5em 0;
 
   input {
     margin: 0;
@@ -317,14 +262,61 @@ body {
 }
 
 .sidebar {
-  position: fixed;
-  top: 6.5em;
-  right: 4em;
   background: $background;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  left: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding: 1.5em 1em;
+  position: fixed;
+  top: 0;
   width: 25vw;
 
   @include touch {
     display: none;
+  }
+
+  .spacer {
+    background: $blue;
+    height: 1px;
+    margin: 0.5em 0;
+    width: 100%;
+  }
+}
+
+.sidebar-header {
+  a {
+    align-items: center;
+    color: $blue;
+    display: flex;
+    font-weight: bold;
+  }
+}
+
+.sidebar-links {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8em;
+  justify-content: center;
+
+  a {
+    color: $blue;
+    margin: 0.5em;
+  }
+}
+
+.sidebar-tags {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5em;
+
+  a {
+    color: $blue;
+    margin: 0 0.2em;
   }
 }
 
