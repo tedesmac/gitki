@@ -16,7 +16,9 @@
 
       <nav class="sidebar-tags" v-if="articleTags.length > 0">
         <FontAwesomeIcon :icon="faTags" />
-        <a href="#" v-for="tag in articleTags">{{ tag }}</a>
+        <a :href="`/${locale}/tag/${tag}`" v-for="tag in articleTags">
+          {{ tag }}
+        </a>
       </nav>
     </div>
 
@@ -59,6 +61,10 @@ export default {
 
       outline: state => state.outline,
     }),
+
+    locale() {
+      return this.$route.params.locale
+    },
 
     faTags: () => faTags,
   },
