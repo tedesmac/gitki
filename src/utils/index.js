@@ -5,12 +5,13 @@ import Fuse from 'fuse.js'
 import SimpleGit from 'simple-git'
 import { createRenderer } from 'vue-server-renderer'
 
-const articleRegex = /\/\w+\/wiki\/.*/gi
+const articleRegex = /\/\w+\/wiki\/.*/i
 const imgTagRegex = /!\[.*\]\(.*\)/g
-const imgUrlRegex = /\(.*\)/g
-const searchRegex = /\/\w+\/search\/?/gi
+const imgUrlRegex = /\(.*\)/
+const searchRegex = /\/\w+\/search\/?/i
 
 export const fixImgTags = markdown => {
+  imgTagRegex.lastIndex = 0
   return markdown
     .match(imgTagRegex)
     .map(match => {
