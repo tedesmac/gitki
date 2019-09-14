@@ -129,6 +129,7 @@ body {
   }
 
   .title {
+    color: $red;
     font-size: 2em;
   }
 }
@@ -189,12 +190,32 @@ body {
   }
 }
 
-.login {
-  color: $red;
-  display: flex;
-  justify-content: flex-end;
-  font-weight: bold;
-  padding: 0.2em 0.5em;
+.index {
+  a {
+    color: $blue;
+    margin: 0.5em;
+  }
+
+  h1 {
+    color: $red;
+  }
+
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .description {
+    color: $blue;
+    font-size: 1.2em;
+  }
+
+  .title {
+    color: $red;
+    font-size: 6em;
+    font-weight: bold;
+    text-align: center;
+  }
 }
 
 .logo {
@@ -203,16 +224,6 @@ body {
   height: 1.5em;
   width: 1.5em;
   margin-right: 0.5em;
-}
-
-.main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  max-width: 100%;
-  min-height: 100vh;
-  padding: 2em;
-  width: 100vw;
 }
 
 .mobilebar {

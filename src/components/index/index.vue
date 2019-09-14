@@ -1,5 +1,40 @@
 <template>
-  <div>
-    <h1>Lefitst Wiki</h1>
+  <div class="index">
+    <div class="title">Lefitst Wiki</div>
+
+    <div class="spacer" />
+
+    <p class="description">
+      <b>Short description about the project.</b> Lorem ipsum dolor sit amet,
+      consectetur adipiscing elit. Curabitur nec tellus mauris. Praesent
+      egestas, sapien id auctor fermentum, leo dui condimentum elit, eu volutpat
+      est nibh a quam. Nam nec amet.
+    </p>
+
+    <div class="spacer" />
+
+    <h1>Categories</h1>
+
+    <div class="categories">
+      <a :href="`/${locale}/tag/${tag}`" :key="tag" v-for="tag in tags">
+        {{ tag }}
+      </a>
+    </div>
   </div>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState({
+      tags: state => state.tags,
+    }),
+
+    locale() {
+      return this.$route.params.locale
+    },
+  },
+}
+</script>
