@@ -19,7 +19,10 @@ module.exports = {
     'no-underscore-dangle': ['error', { allow: ['__INITIAL_STATE__'] }],
     'no-param-reassign': [
       'error',
-      { props: true, ignorePropertyModificationsFor: ['context', 'state'] },
+      {
+        props: true,
+        ignorePropertyModificationsFor: ['acc', 'context', 'state'],
+      },
     ],
     'jsdoc/check-alignment': 2,
     'jsdoc/check-examples': 2,

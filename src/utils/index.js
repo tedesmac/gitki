@@ -84,6 +84,7 @@ export const getInitialState = (url, query) => {
   return {
     ...defaultState,
     ...state,
+    tags: global.tags[lang],
   }
 }
 
@@ -148,6 +149,16 @@ export const setFuseInstance = () => {
     exclude: [/\.git/, /\/img/],
   })
   const articles = tree.children.flatMap(child => getWikiData(child))
+  global.tags = articles.reduce((acc, article) => {
+    const { lang, tags } = article
+    if (lang in acc) {
+      const missingTags = tags.map(tag => !acc[lang].includes(tag))
+      acc[lang] = [...acc[lang], ...missingTags].sort()
+    } else {
+      acc[lang] = tags
+    }
+    return acc
+  }, {})
   global.fuse = new Fuse(articles, {
     shouldSort: true,
     threshold: 0.6,
