@@ -5,10 +5,11 @@ import Fuse from 'fuse.js'
 import SimpleGit from 'simple-git'
 import { createRenderer } from 'vue-server-renderer'
 
-const articleRegex = /\/\w+\/wiki\/.*/i
+const articleRegex = /\/\w+\/wiki\/.+/i
 const imgTagRegex = /!\[.*\]\(.*\)/g
 const imgUrlRegex = /\(.*\)/
 const searchRegex = /\/\w+\/search\/?/i
+const tagRegex = /\/\w+\/tag\/.+/i
 
 export const fixImgTags = markdown => {
   imgTagRegex.lastIndex = 0
@@ -57,9 +58,10 @@ export const getInitialState = (url, query) => {
   if (articleRegex.test(url)) {
     const article = url.replace(/\/\w+\/wiki\//, '')
     state.article = getArticle(lang, article)
-  }
-  if (searchRegex.test(url)) {
+  } else if (searchRegex.test(url)) {
     state.searchResults = getSearch(lang, query)
+  } else if (tagRegex.test(url)) {
+    // do something
   }
   return {
     ...defaultState,
