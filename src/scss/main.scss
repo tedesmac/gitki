@@ -373,6 +373,24 @@ body {
   }
 }
 
+.tag {
+  a {
+    color: $blue;
+    font-size: 1.2em;
+    margin: 0.5em;
+  }
+
+  h1,
+  h2 {
+    color: $red;
+  }
+
+  .articles {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
 .title {
   color: $red;
 }
