@@ -51,6 +51,23 @@ export const getSearch = (lang, query) => {
   return results
 }
 
+export const getTagData = (lang, tag) => {
+  console.log('[GET TAG]', lang, tag)
+  return global.fuse
+    .search(tag)
+    .filter(item => item.lang === lang)
+    .filter(item => item.tags.includes(tag))
+    .sort((a, b) => {
+      if (a.title.toLowerCase() < b.title.toLowerCase()) {
+        return -1
+      }
+      if (a.title.toLowerCase() > b.title.toLowerCase()) {
+        return 1
+      }
+      return 0
+    })
+}
+
 export const getInitialState = (url, query) => {
   console.log('[INITAL STATE]', url)
   const lang = getLang(url)
@@ -61,7 +78,8 @@ export const getInitialState = (url, query) => {
   } else if (searchRegex.test(url)) {
     state.searchResults = getSearch(lang, query)
   } else if (tagRegex.test(url)) {
-    // do something
+    const tag = url.replace(/\/\w+\/tag\//, '')
+    state.searchResults = getTagData(lang, tag)
   }
   return {
     ...defaultState,
