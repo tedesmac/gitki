@@ -1,6 +1,6 @@
 <template>
   <nav class="outline">
-    <p>Table of contents</p>
+    <p v-if="outline.length > 0">Table of contents</p>
     <a v-for="i in outline" :href="i.href" @click="onClick">
       <h1 v-if="i.tag === 'H1'">
         <FontAwesomeIcon class="" :icon="faCaretRight" />
