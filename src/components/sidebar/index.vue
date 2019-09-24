@@ -20,6 +20,10 @@
           {{ tag }}
         </a>
       </nav>
+
+      <div class="spacer" />
+
+      <Language />
     </div>
 
     <div>
@@ -37,12 +41,13 @@
 <script>
 import { faTags } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import Language from 'components/language'
 import Outline from 'components/outline'
 import SearchBar from 'components/search-bar'
 import { mapState } from 'vuex'
 
 export default {
-  components: { FontAwesomeIcon, Outline, SearchBar },
+  components: { FontAwesomeIcon, Language, Outline, SearchBar },
 
   computed: {
     ...mapState({

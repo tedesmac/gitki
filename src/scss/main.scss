@@ -233,6 +233,24 @@ body {
   }
 }
 
+.language {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+
+  p {
+    align-items: center;
+    display: flex;
+    margin: 0;
+  }
+
+  .language-icon {
+    font-size: 1.5em;
+    margin-right: 0.5em;
+  }
+}
+
 .logo {
   background: $red;
   border-radius: 5px;
