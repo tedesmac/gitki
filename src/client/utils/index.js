@@ -43,10 +43,15 @@ const sanitizeOptions = {
 }
 
 export const defaultState = {
-  article: {},
+  article: {
+    markdown: '',
+    tags: [],
+    title: '',
+    translations: {},
+  },
   description: '',
   menu: false,
-  outline: {},
+  outline: [],
   searchResults: [],
   tags: [],
   title: '',
