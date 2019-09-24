@@ -21,7 +21,7 @@
         </a>
       </nav>
 
-      <div class="spacer" />
+      <div class="spacer" v-if="translations" />
 
       <Language />
     </div>
@@ -65,6 +65,11 @@ export default {
       menu: state => state.menu,
 
       outline: state => state.outline,
+
+      translations: state => {
+        const translations = state.article.translations
+        return Object.keys(translations).length > 0
+      },
     }),
 
     locale() {
