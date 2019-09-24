@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="home">
     <div class="title">Lefitst Wiki</div>
 
     <div class="spacer" />
