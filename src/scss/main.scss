@@ -188,6 +188,16 @@ body {
     margin: 0;
     margin-left: 2em;
   }
+
+  p {
+    color: $blue;
+    font-size: 1em;
+    margin: 0.2em 0 0.4em;
+  }
+
+  svg {
+    margin-right: 0.5em;
+  }
 }
 
 .index {
