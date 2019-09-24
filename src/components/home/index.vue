@@ -16,9 +16,12 @@
     <h1>Categories</h1>
 
     <div class="categories">
-      <a :href="`/${locale}/tag/${tag}`" :key="tag" v-for="tag in tags">
-        {{ tag }}
-      </a>
+      <div v-for="key in Object.keys(tags)" :key="key">
+        <h2>{{ key }}</h2>
+        <a v-for="tag in tags[key]" :href="`/${locale}/tag/${tag}`" :key="tag">
+          {{ tag }}
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +32,16 @@ import { mapState } from 'vuex'
 export default {
   computed: {
     ...mapState({
-      tags: state => state.tags,
+      tags: state =>
+        state.tags.reduce((acc, tag) => {
+          const letter = tag[0].toUpperCase()
+          if (letter in acc) {
+            acc[letter] = [...acc[letter], tag]
+          } else {
+            acc[letter] = [tag]
+          }
+          return acc
+        }, {}),
     }),
 
     locale() {
