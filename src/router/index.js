@@ -1,5 +1,5 @@
 import ArticleComponent from 'components/article'
-import IndexComponent from 'components/index'
+import HomeComponent from 'components/home'
 import SearchComponent from 'components/search'
 import TagComponent from 'components/tag'
 import Router from 'vue-router'
@@ -13,7 +13,7 @@ export default () =>
     routes: [
       {
         path: '/:locale',
-        component: IndexComponent,
+        component: HomeComponent,
       },
       {
         path: '/:locale/search',
