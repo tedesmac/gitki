@@ -182,15 +182,19 @@ export const setFuseInstance = () => {
 
 export const updateWikiRepository = repoUrl => {
   const git = GitPromise('wiki')
-  return git
+  git
     .status()
     .then(() => {
       console.log('Pulling repository')
-      return git.pull()
+      git.pull().then(() => {
+        setFuseInstance()
+      })
     })
     .catch(() => {
       const newRepo = GitPromise()
       console.log('Clonning repository')
-      return newRepo.clone(repoUrl, 'wiki')
+      newRepo.clone(repoUrl, 'wiki').then(() => {
+        setFuseInstance()
+      })
     })
 }

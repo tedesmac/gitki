@@ -1,14 +1,8 @@
 import Server from 'server'
-import {
-  loadSettings,
-  setFuseInstance,
-  updateWikiRepository,
-} from 'server/utils'
+import { loadSettings, updateWikiRepository } from 'server/utils'
 
 const settings = loadSettings()
 
-updateWikiRepository(settings.repository).then(() => {
-  setFuseInstance()
-})
+updateWikiRepository(settings.repository)
 
 Server.start()
