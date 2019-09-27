@@ -31,7 +31,6 @@ const resolve = {
     routes: path.resolve(__dirname, 'src/routes'),
     server: path.resolve(__dirname, 'src/server'),
     store: path.resolve(__dirname, 'src/store'),
-    utils: path.resolve(__dirname, 'src/utils'),
     views: path.resolve(__dirname, 'src/views'),
     vue$: 'vue/dist/vue.esm.js',
   },

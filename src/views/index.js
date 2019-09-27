@@ -1,5 +1,5 @@
 import AppFactory from 'factory'
-import { getInitialState, renderer } from 'utils'
+import { getInitialState, renderer } from 'server/utils'
 
 const createApp = context => {
   return new Promise((resolve, reject) => {

@@ -1,5 +1,9 @@
 import Server from 'server'
-import { loadSettings, setFuseInstance, updateWikiRepository } from 'utils'
+import {
+  loadSettings,
+  setFuseInstance,
+  updateWikiRepository,
+} from 'server/utils'
 
 const settings = loadSettings()
 console.log(settings)
