@@ -7,8 +7,8 @@ import {
 
 const settings = loadSettings()
 
-updateWikiRepository(settings.repository)
-
-setFuseInstance()
+updateWikiRepository(settings.repository).then(() => {
+  setFuseInstance()
+})
 
 Server.start()

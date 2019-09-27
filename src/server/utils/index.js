@@ -2,7 +2,7 @@ import { defaultState, getMetaData } from 'client/utils'
 import DirectoryTree from 'directory-tree'
 import Fs from 'fs'
 import Fuse from 'fuse.js'
-import SimpleGit from 'simple-git'
+import GitPromise from 'simple-git/promise'
 import { createRenderer } from 'vue-server-renderer'
 
 const articleRegex = /\/\w+\/wiki\/.+/i
@@ -177,18 +177,16 @@ export const setFuseInstance = () => {
 }
 
 export const updateWikiRepository = repoUrl => {
-  try {
-    SimpleGit('wiki').pull((err, update) => {
-      if (update && update.summary.changes) {
-        console.log('Pulling')
-      } else {
-        console.log(err)
-        console.log('repo is up to date')
-      }
+  const git = GitPromise('wiki')
+  return git
+    .status()
+    .then(() => {
+      console.log('Pulling repository')
+      return git.pull()
     })
-  } catch (error) {
-    console.log(error)
-    console.log('clonning repository')
-    SimpleGit().clone(repoUrl, 'wiki')
-  }
+    .catch(() => {
+      const newRepo = GitPromise()
+      console.log('Clonning repository')
+      return newRepo.clone(repoUrl, 'wiki')
+    })
 }
