@@ -154,6 +154,10 @@ export const setFuseInstance = () => {
     extensions: /\.md$/i,
     exclude: [/\.git/, /\/img/],
   })
+  if (tree == null) {
+    console.log('Unable to read wiki directory.')
+    process.exit(1)
+  }
   const articles = tree.children.flatMap(child => getWikiData(child))
   global.tags = articles.reduce((acc, article) => {
     const { lang, tags } = article
