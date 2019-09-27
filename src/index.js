@@ -6,7 +6,6 @@ import {
 } from 'server/utils'
 
 const settings = loadSettings()
-console.log(settings)
 
 updateWikiRepository(settings.repository)
 

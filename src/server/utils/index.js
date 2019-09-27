@@ -11,6 +11,11 @@ const imgUrlRegex = /\(.*\)/
 const searchRegex = /\/\w+\/search\/?/i
 const tagRegex = /\/\w+\/tag\/.+/i
 
+const defaultSettings = {
+  fetchInterval: 60,
+  repository: '',
+}
+
 export const fixImgTags = markdown => {
   imgTagRegex.lastIndex = 0
   return markdown
@@ -108,9 +113,10 @@ export const loadSettings = () => {
     const contents = Fs.readFileSync('wiki.config.json')
     config = JSON.parse(contents)
   } catch (error) {
-    console.log(error)
+    console.error('Unable to read wiki.config.settings.')
+    process.exit(1)
   }
-  return config
+  return { ...defaultSettings, ...config }
 }
 
 export const renderer = (component, scripts = [], state = {}) => {
