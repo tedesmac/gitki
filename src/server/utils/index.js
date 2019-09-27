@@ -12,7 +12,7 @@ const searchRegex = /\/\w+\/search\/?/i
 const tagRegex = /\/\w+\/tag\/.+/i
 
 const defaultSettings = {
-  fetchInterval: 60,
+  pullInterval: 60,
   repository: '',
 }
 
