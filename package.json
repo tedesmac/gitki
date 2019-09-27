@@ -41,6 +41,7 @@
     "@hapi/hapi": "^18.3.2",
     "@hapi/inert": "^5.2.1",
     "core-js": "^3.2.1",
+    "cron": "^1.7.2",
     "directory-tree": "^2.2.4",
     "fuse.js": "^3.4.5",
     "marked": "^0.7.0",
