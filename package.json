@@ -59,9 +59,9 @@
     "vuex": "^3.1.1"
   },
   "scripts": {
-    "build": "webpack -p",
+    "build": "webpack -p --config webpack/prod.config.js",
     "dev": "npm-run-all --parallel dev:watch dev:server",
-    "dev:build": "webpack -d",
+    "dev:build": "webpack -d --config webpack/dev.config.js",
     "dev:server": "nodemon . start --watch dist/main.js",
     "dev:watch": "webpack --watch",
     "lint": "eslint",
