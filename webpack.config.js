@@ -2,6 +2,7 @@ const path = require('path')
 const Merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const WebpackBundleTracker = require('webpack-bundle-tracker')
 
 const BASE_DIR = path.resolve(__dirname)
 const DIST_DIR = path.resolve(BASE_DIR, 'dist')
@@ -60,7 +61,13 @@ const baseConfig = {
       },
     },
     module: { rules },
-    plugins,
+    plugins: [
+      ...plugins,
+      new WebpackBundleTracker({
+        path: __dirname,
+        filename: 'webpack-stats.client.json',
+      }),
+    ],
     resolve,
   },
 
@@ -71,6 +78,12 @@ const baseConfig = {
     output: {
       path: CLIENT_CSS_DIR,
     },
+    plugins: [
+      new WebpackBundleTracker({
+        path: __dirname,
+        filename: 'webpack-stats.css.json',
+      }),
+    ],
     module: {
       rules: [
         {
