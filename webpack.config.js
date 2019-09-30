@@ -1,6 +1,13 @@
 const path = require('path')
+const Merge = require('webpack-merge')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
+const BASE_DIR = path.resolve(__dirname)
+const DIST_DIR = path.resolve(BASE_DIR, 'dist')
+const SRC_DIR = path.resolve(BASE_DIR, 'src')
+const CLIENT_CSS_DIR = path.resolve(DIST_DIR, 'client/css')
+const CLIENT_JS_DIR = path.resolve(DIST_DIR, 'client/js')
 
 const rules = [
   {
@@ -24,31 +31,28 @@ const plugins = [new VueLoaderPlugin()]
 
 const resolve = {
   alias: {
-    client: path.resolve(__dirname, 'src/client'),
-    components: path.resolve(__dirname, 'src/components'),
-    factory: path.resolve(__dirname, 'src/factory'),
-    router: path.resolve(__dirname, 'src/router'),
-    routes: path.resolve(__dirname, 'src/routes'),
-    server: path.resolve(__dirname, 'src/server'),
-    store: path.resolve(__dirname, 'src/store'),
-    views: path.resolve(__dirname, 'src/views'),
+    client: path.resolve(SRC_DIR, 'client'),
+    components: path.resolve(SRC_DIR, 'components'),
+    factory: path.resolve(SRC_DIR, 'factory'),
+    router: path.resolve(SRC_DIR, 'router'),
+    routes: path.resolve(SRC_DIR, 'routes'),
+    server: path.resolve(SRC_DIR, 'server'),
+    store: path.resolve(SRC_DIR, 'store'),
+    views: path.resolve(SRC_DIR, 'views'),
     vue$: 'vue/dist/vue.esm.js',
   },
   extensions: ['.js', '.json', '.vue'],
 }
 
-const mode = 'development'
-
-module.exports = [
-  // client scripts
-  {
+const baseConfig = {
+  client: {
     target: 'web',
     entry: {
-      client: path.resolve(__dirname, 'src/client'),
+      client: path.resolve(SRC_DIR, 'client'),
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(__dirname, 'dist/client/js'),
+      path: CLIENT_JS_DIR,
     },
     optimization: {
       splitChunks: {
@@ -56,24 +60,17 @@ module.exports = [
       },
     },
     module: { rules },
-    mode,
     plugins,
     resolve,
   },
-  // scss
-  {
+
+  scss: {
     entry: {
-      main: path.resolve(__dirname, 'src/scss/main.scss'),
+      main: path.resolve(SRC_DIR, 'scss/main.scss'),
     },
     output: {
-      filename: '[name].scss',
-      path: path.resolve(__dirname, 'dist/client/css'),
+      path: CLIENT_CSS_DIR,
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: '[name].css',
-      }),
-    ],
     module: {
       rules: [
         {
@@ -92,22 +89,72 @@ module.exports = [
         },
       ],
     },
-    mode,
   },
-  // server
-  {
+  server: {
     target: 'node',
     entry: {
-      main: path.resolve(__dirname, 'src/index.js'),
+      main: SRC_DIR,
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(__dirname, 'dist'),
+      path: DIST_DIR,
       libraryTarget: 'commonjs2',
     },
     module: { rules },
-    mode,
     plugins,
     resolve,
   },
+}
+
+const devConfig = [
+  Merge(baseConfig.client, {
+    output: {
+      filename: '[name].bundle.js',
+    },
+    mode: 'development',
+  }),
+  Merge(baseConfig.scss, {
+    output: {
+      filename: '[name].bundle.scss',
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].bundle.css',
+      }),
+    ],
+  }),
+  Merge(baseConfig.server, {
+    mode: 'development',
+  }),
 ]
+
+const prodConfig = [
+  Merge(baseConfig.client, {
+    output: {
+      filename: '[name].bundle.[chunkhash].js',
+    },
+    mode: 'production',
+  }),
+  Merge(baseConfig.scss, {
+    output: {
+      filename: '[name].bundle.[chunkhash].scss',
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: '[name].bundle.[chunkhash].css',
+      }),
+    ],
+  }),
+  Merge(baseConfig.server, {
+    optimization: {
+      minimize: false,
+    },
+    mode: 'production',
+  }),
+]
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = prodConfig
+} else {
+  module.exports = devConfig
+}
