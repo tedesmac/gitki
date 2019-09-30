@@ -54,13 +54,6 @@ const baseConfig = {
     output: {
       path: CLIENT_JS_DIR,
     },
-    optimization: {
-      splitChunks: {
-        chunks: 'all',
-        maxSize: 249856,
-        minSize: 131072,
-      },
-    },
     module: { rules },
     plugins: [
       ...plugins,
@@ -146,6 +139,13 @@ const prodConfig = [
   Merge(baseConfig.client, {
     output: {
       filename: '[name].bundle.[chunkhash].js',
+    },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 249000,
+        minSize: 131071,
+      },
     },
     mode: 'production',
   }),
