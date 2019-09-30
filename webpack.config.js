@@ -52,12 +52,13 @@ const baseConfig = {
       client: path.resolve(SRC_DIR, 'client'),
     },
     output: {
-      filename: '[name].js',
       path: CLIENT_JS_DIR,
     },
     optimization: {
       splitChunks: {
         chunks: 'all',
+        maxSize: 249856,
+        minSize: 131072,
       },
     },
     module: { rules },

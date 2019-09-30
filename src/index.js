@@ -1,6 +1,12 @@
 import Cron from 'cron'
 import Server from 'server'
-import { loadSettings, updateWikiRepository } from 'server/utils'
+import {
+  loadSettings,
+  loadWebpackStats,
+  updateWikiRepository,
+} from 'server/utils'
+
+loadWebpackStats()
 
 const settings = loadSettings()
 

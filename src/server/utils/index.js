@@ -113,14 +113,55 @@ export const loadSettings = () => {
     const contents = Fs.readFileSync('wiki.config.json')
     config = JSON.parse(contents)
   } catch (error) {
-    console.error('Unable to read wiki.config.settings.')
+    console.error('Unable to read wiki.config.settings.', error)
     process.exit(1)
   }
   return { ...defaultSettings, ...config }
 }
 
-export const renderer = (component, scripts = [], state = {}) => {
-  const scriptStrings = scripts.reduce((acc, name) => {
+export const loadWebpackStats = () => {
+  try {
+    const clientStats = JSON.parse(Fs.readFileSync('webpack-stats.client.json'))
+    if (clientStats.status === 'done') {
+      const { chunks } = clientStats
+      global.clientScripts = Object.keys(chunks)
+        .flatMap(key => {
+          const scripts = chunks[key]
+          return scripts.map(s => s.name)
+        })
+        .reverse()
+    }
+  } catch (error) {
+    console.error('Unable to read webpack-stats.client.json', error)
+    process.exit(1)
+  }
+
+  try {
+    const cssStats = JSON.parse(Fs.readFileSync('webpack-stats.css.json'))
+    if (cssStats.status === 'done') {
+      const { chunks } = cssStats
+      global.cssStyles = Object.keys(chunks)
+        .flatMap(key => {
+          const scripts = chunks[key]
+          return scripts.map(s => s.name)
+        })
+        .filter(style => /\.css$/.test(style))
+    }
+  } catch (error) {
+    console.error('Unable to read webpack-stats.client.json', error)
+    process.exit(1)
+  }
+}
+
+export const renderer = (component, scripts = [], styles = [], state = {}) => {
+  const stylesString = styles.reduce((acc, style) => {
+    return `${acc}
+<link rel="stylesheet"
+type="text/css"
+href="/static/css/${style}">`
+  }, '')
+
+  const scriptsString = scripts.reduce((acc, name) => {
     return `${acc}<script src="/static/js/${name}"></script>`
   }, '')
 
@@ -131,12 +172,12 @@ export const renderer = (component, scripts = [], state = {}) => {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    ${stylesString}
     <script>window.__INITIAL_STATE__ = ${JSON.stringify(state)}</script>
   </head>
   <body>
     <!--vue-ssr-outlet-->
-    ${scriptStrings}
+    ${scriptsString}
   </body>
 </html>
 `,

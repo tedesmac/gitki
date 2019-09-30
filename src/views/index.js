@@ -24,7 +24,7 @@ export default req => {
   const context = { url: req.path, state }
 
   return createApp(context)
-    .then(app => renderer(app, ['vendors~client.js', 'client.js'], state))
+    .then(app => renderer(app, global.clientScripts, global.cssStyles, state))
     .catch(error => {
       console.log('[APP VIEW]', error)
       return '<b>500</b> Internal server error'
