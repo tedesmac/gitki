@@ -1,4 +1,3 @@
-import Cron from 'cron'
 import Server from 'server'
 import {
   loadSettings,
@@ -15,17 +14,11 @@ console.log(
   settings.pullInterval,
   'minutes'
 )
-const job = new Cron.CronJob(
-  `* */${settings.pullInterval} * * * *`,
-  () => {
-    updateWikiRepository(settings.repository)
-  },
-  null,
-  false,
-  null,
-  undefined,
-  true
+setInterval(
+  updateWikiRepository,
+  settings.pullInterval * 60000,
+  settings.repository
 )
-job.start()
+updateWikiRepository(settings.repository)
 
 Server.start()
